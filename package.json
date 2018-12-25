@@ -1,0 +1,19 @@
+{
+  "name": "ranvier-docs",
+  "private": true,
+  "homepage": "https://ranviermud.com",
+  "license": "MIT",
+  "author": "Shawn Biddle (http://shawnbiddle.com)",
+  "version": "1.0.0",
+  "repository": "github:ranviermud/core",
+  "engines": {
+    "node": ">= 10.12.0"
+  },
+  "scripts": {
+    "build-docs": "jsdoc -c jsdoc.conf"
+  },
+  "devDependencies": {
+    "jsdoc": "^3.5.5",
+    "tui-jsdoc-template": "^1.2.2"
+  }
+}
