@@ -6,3 +6,5 @@ node_modules
 site/
 docs/jsdoc/*
 !docs/jsdoc/.gitkeep
+docs/index.md
+docs/contributing.md
