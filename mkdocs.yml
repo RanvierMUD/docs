@@ -26,23 +26,22 @@ google_analytics: ["UA-28253658-1", "auto"]
 pages:
 - Overview: index.md
 - Get Started: get_started.md
-- Server Config: server_config.md
-- Project Structure: structure.md
+- Bundles: bundles.md
+- Building:
+    - Creating an Area: 'building/index.md'
+    - Items: 'building/items.md'
+    - NPCs: 'building/npcs.md'
+    - Rooms: 'building/rooms.md'
+    - Quests: 'building/quests.md'
+    - Scripting: 'building/scripting.md'
+- Coding:
+    - Server Events: 'coding/server.md'
+    - Channels: 'coding/channels.md'
+    - Classes/Abilities: 'coding/classes.md'
+    - Commands: 'coding/commands.md'
+    - Effects: 'coding/effects.md'
+    - Player/Input Events: 'coding/input_events.md'
 - Extending:
-    - Bundles: 'extending/bundles.md'
-    - Server: 'extending/server.md'
-    - Areas:
-        - Creating an Area: 'extending/areas/index.md'
-        - Items: 'extending/areas/items.md'
-        - NPCs: 'extending/areas/npcs.md'
-        - Rooms: 'extending/areas/rooms.md'
-        - Quests: 'extending/areas/quests.md'
-        - Scripting: 'extending/areas/scripting.md'
-    - Channels: 'extending/channels.md'
-    - Classes/Abilities: 'extending/classes.md'
-    - Commands: 'extending/commands.md'
-    - Effects: 'extending/effects.md'
-    - Player/Input Events: 'extending/input_events.md'
+    - Entity Loading: 'extending/entity_loading.md'
 - Contributing: contributing.md
-- Common Issues: common_issues.md
 - License/Credits: license.md

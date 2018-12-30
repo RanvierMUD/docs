@@ -10,7 +10,7 @@ Ranvier configuration is stored in the `ranvier.json` file in the root of the pr
 :    Port that the game runs on. Note, port < 1024 may require that you run the ./ranvier executable with sudo.
 
 `bundles` _`array<string>`_
-:    List of enabled bundles, for details see the [Bundles](extending/bundles.md) section
+:    List of enabled bundles, for details see the [Bundles](bundles.md) section
 
 `maxAccountNameLength` _`number`_ `(20)`
 `minAccountNameLength` _`number`_ (3)

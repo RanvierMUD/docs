@@ -9,7 +9,7 @@ bundles/my-bundle/
 ```
 
 The structure of the file is identical to entity scripts, see the documentation for those in the
-[Scripting](areas/scripting.md)
+[Scripting](../building/scripting.md)
 
 ## Input Events
 
@@ -33,9 +33,8 @@ and the only one that _must_ be implemented if you choose to disable the default
 ```javascript
 'use strict';
 
-// Import the Data helper to help load static files and EventUtil has some helpers for outputing
-text to the socket before the Player object is available
-const { Data, EventUtil } = require('ranvier');
+// EventUtil has some helpers for outputing to the socket
+const { EventUtil } = require('ranvier');
 
 // Very similar structure to all of our bundle loaded javascript files.
 module.exports = {
@@ -45,12 +44,7 @@ module.exports = {
   but returns a function accepting the socket
   */
   event: state => socket => {
-    // in this example case we're just loading the MOTD (Message of the Day), the screen
-    // that you commonly see when logging into MUDs, and write it to the socket
-    const motd = Data.loadMotd();
-    if (motd) {
-      EventUtil.genSay(socket)(motd);
-    }
+    EventUtil.genSay(socket)('Welcome to my game!');
 
     /*
     Here we pass the socket to the next step of the connection process, the login event.

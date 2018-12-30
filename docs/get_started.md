@@ -17,16 +17,16 @@ To install the starter kit run `npm run init` and choose `Y` to install the exam
 of bundles which demonstrate various features of the engine. You can use them as-is to make your own game or clone them
 to customize them to your liking.
 
-> NOTE: Be sure to read the [Bundles](extending/bundles.md) guide before editing the example bundles
+> NOTE: Be sure to read the [Bundles](bundles.md) guide before editing the example bundles
 
 Once the command is finished start the server as described below. You will then be able to connect through `telnet`
 at hostname `localhost` on port 4000. The default login is `admin` for the username and `ranviermud` for the password.
 
 ### From scratch
 
-If you wish to create a Ranvier game from scratch it's recommended that at minimum you install a server bundle to
-allow connections to your game. Being the `telnet-connections` or `websocket-connections` (or both) bundles. For details
-on installing and managing bundles see the [Bundles](extending/bundles.md) guide.
+If you wish to create a Ranvier game from scratch it's recommended that at minimum you install a networking bundle to
+allow connections to your game. Being the `telnet-networking` or `websocket-networking` (or both) bundles. For details
+on installing and managing bundles see the [Bundles](bundles.md) guide.
 
 ## Starting the server
 
@@ -57,4 +57,4 @@ admin command will allow you to reload a command in game by doing `hotfix <comma
 ## Next step
 
 The next step is understanding what a bundle is, how they are loaded into the game, and how to manage and edit them. For
-this follow the [Bundles](extending/bundles.md) guide.
+this follow the [Bundles](bundles.md) guide.

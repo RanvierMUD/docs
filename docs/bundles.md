@@ -175,10 +175,18 @@ as such you will not be able to carry your changes with you if you clone your pr
 
 ## Next steps
 
-Now that you know how to install/create a bundle and enable it the next step is actually building your game. If you used
-the starter kit mentioned in the [Get Started](../get_started.md) guide you can go directly to
-the individual guides for building/scripting different parts of your game like [Commands](commands.md) or
-[Skills](skills.md).
+Now that you know how to install/create a bundle and enable it the next step is actually building your game.
 
 If you are making your game from scratch, or have only installed a networking bundle follow the [Creating Your
 Game](creating.md) guide.
+
+If you used the starter kit mentioned in the [Get Started](../get_started.md) guide you can go directly to the
+individual guides. The documentation is split into two parts: Building and Coding.
+
+* Building is for... builders: the people creating areas, npcs, items, etc. Little to no programming experience is needed.
+* Coding is for... coders: the people creating new commands, skills, effects, etc.
+
+There is some overlap between the two; for example a coder will need to create the attribute definition for a builder to
+use that attribute on an NPC, or for a builder to create a quest a coder may need to create the goal and reward types
+for them to use. These may, in fact, be the same person but the guides arer separated to illustrate which bundle content
+is stored in pure data and which is in Javascript files.

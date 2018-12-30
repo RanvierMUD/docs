@@ -45,7 +45,7 @@ allow telnet based connections. With that in mind let's create our own bundle th
 > Note: Ranvier comes with a websocket connection bundle but it is now enabled by default, you don't actually have to
 > write your own just enable the bundle. However, this example remains for pedagogical purposes.
 
-First our bundle will need a 3rd party library so follow the process described in the [Bundles](bundles.md) guide to
+First our bundle will need a 3rd party library so follow the process described in the [Bundles](../bundles.md) guide to
 install the `ws` node module.
 
 
