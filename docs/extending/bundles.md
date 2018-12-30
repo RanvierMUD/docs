@@ -1,94 +1,184 @@
 Bundles are the way you modify Ranvier's functionality without having to touch the core code. They let you modify
 basically everything about the game: how commands are interpreted, commands themselves, channels, items, rooms, NPCs,
-quests, login flow, and spell effects.
+quests, login flow, spell effects, even the network layer of your game.
 
 [TOC]
 
-## Default Bundles
+Bundles live under the `bundles/` folder of your project. They can be a git submodule (as will happen when using the
+`install-bundle` command) or just a normal folder containing the files.
 
-Ranvier comes with a set of bundles that provide a base level amount of functionality expected in most Diku-style MUDs.
-These bundles are _example_ implementations. They are absolutely stable enough to act as a base for your game but if you
-wish to write your game from scratch using only the core engine it's entirely possible to disable all of these bundles
-with no harm whatsoever.
-
-* `ranvier-areas` - Small example area demonstrating diku-style rooms, NPCs,
-  items, and quests.
-* `ranvier-channels` - Set of example channels: say, tell, yell, and chat
-* `ranvier-classes` - A basic example of classes, skills (active and passive), and spells
-* `ranvier-combat` - Basic diku style real-time auto combat
-* `ranvier-commands` - Set of basic diku style commands: movement, look, get, drop, wear, who, etc.
-* `ranvier-effects` - Set of example spell effects
-* `ranvier-groups` - Example implementation of player groups
-* `ranvier-input-events` - Diku-style implementation of login flow with accounts
-  and Diku-style command interpretation
-    * **Warning:** Disabling this bundle is ill-advised unless you have studied
-      well the [Input Events](input_events.md) documentation
-* `ranvier-lib` - Not actually loaded into the game, just a place to put common ranvier bundle functionality
-* `ranvier-player-events` - Example implementation of experience/leveling for the player
-* `ranvier-quests` - Example implementation of quest commands
-* `ranvier-telnet` - Makes Ranvier use a telnet server for player connections (enabled by default)
-* `ranvier-vendors` - Example implementation of in game shops
-* `ranvier-websocket` - WebSocket server to be used instead of/along side telnet (off by default)
-* `ranvier-npc-behaviors` - Ready-to-use standalone behaviors for NPCs: wandering, aggro, etc.
-* `debug-commands` - Commands useful while debugging (`givexp` for example), commands only usable by ADMIN role players
-
-> Note: If you want to modify one of the Ranvier bundles it's recommended that you disable the bundle you wish to
-> modify, copy it to your own bundle, rename it, and modify that. This way you can safely pull in updates without
-> worrying about conflicts.
-
-## Enabling &amp; Disabling Bundles
-
-To enable or disable a bundle simply add/remove the bundle name from `bundles` in the `ranvier.json` config. You can see
-an overview of that file in the [Server Config](../server_config.md) section.
-
-## Creating a Bundle
-
-Each individual bundle is a standalone modification to the game, think of them like a Skyrim mod. A mod could add a
-single item or it could completely transform the game. Unlike Skyrim mods load order does not matter.
-
-To create a new bundle simply create a new directory underneath `bundles/`. Inside your bundle directory you may have
-any or all of the folders/files below.
-
-### What's in a Bundle
+## What's in a Bundle
 
 A bundle can contain any or all of the following children though it's suggested that you keep your bundles as modular as
-possible. Click on any of the items below to see an in-depth tutorial.
+possible, i.e., try to keep input events out of the same bundle you're building your areas.
 
-<pre>
-<a href="../areas/">areas/</a>
-  Areas contain items, rooms, NPCs, and quests.
-<a href="../areas/scripting#behaviors">behaviors/</a>
-  Behaviors are scripts that are shared between entities of the same type (rooms, items, NPCs)
-<a href="../classes/">classes/</a>
-  Player classes
-<a href="../commands/">commands/</a>
-  What it says on the tin, commands to add to the game
-<a href="../effects/">effects/</a>
-  Effects that can be applied to characters (NPCs/Players)
-<a href="../help/">help/</a>
-  Helpfiles
-<a href="../events/">input-events/</a>
-  Input events are events that happen on the socket, this involves login and command interpreting.
-  <strong>Warning:</strong> Because of input events' important role it is generally not advised to load more than one
-  bundle with input events
-<a href="../classes#skillsspells">skills/</a>
-  Player skills (Spells are just skills with the SPELL type)
-<a href="../channels/">channels.js</a>
-  Communication channels
-<a href="../events/">player-events.js</a>
-  Basically everything the player does triggers an event on them that can be attached to and perform
-  functionality such as experience, leveling, combat, and time based calculations
-</pre>
+<dl>
+<dt><strong>areas/</strong></dt>
+<dd>Area definitions and their items, rooms, NPCs, and quests along with the scripts for those entities</dd>
+
+<dt><strong>behaviors/</strong></dt>
+<dd>Scripts that are shared between entities of the same type, e.g., a behavior to have an NPC wander around an area</dd>
+
+<dt><strong>classes/</strong></dt>
+<dd>Player classes</dd>
+
+<dt><strong>commands/</strong></dt>
+<dd>What it says on the tin, commands to add to the game</dd>
+
+<dt><strong>effects/</strong></dt>
+<dd>Effects that can be applied to characters (NPCs/Players)</dd>
+
+<dt><strong>help/</strong></dt>
+<dd>Helpfiles for commands</dd>
+
+<dt><strong>skills/</strong></dt>
+<dd>Player skills (Spells are included, they're just skills with the SPELL type)</dd>
+
+<dt><strong>input-events/</strong></dt>
+<dd>Scripts attached to a connected socket, this involves things like handling login and parsing incoming data for commands</dd>
+<dd><strong>Warning:</strong> Because of input events' important role it is generally not advised to load more than one bundle with input events</dd>
+
+<dt><strong>server-events/</strong></dt>
+<dd>Scripts attached to the startup of Ranvier itself such as starting a telnet server</dd>
+
+<dt><strong>quest-goals/</strong></dt>
+<dd>Quest goal definitions that can be used by builders when writing quests</dd>
+
+<dt><strong>quest-rewards/</strong></dt>
+<dd>Quest reward definitions that can be used by builders when writing quests</dd>
+
+<dt><strong>channels.js</strong></dt>
+<dd>Communication channels</dd>
+
+<dt><strong>player-events.js</strong></dt>
+<dd>Scripts attached to the player such being hit, gaining experience, leveling, etc.</dd>
+
+<dt><strong>attributes.js</strong></dt>
+<dd>Definitions of available attributes to assign to NPCs or players</dd>
+</dl>
+
+## How bundles are loaded
+
+Before writing your first bundle it's important to know how bundles work and how they are loaded into Ranvier so you are
+aware of how and when to access game data.
+
+### Initialization
+
+Ranvier first reads the `ranvier.json` config to determine how data should get loaded into the game. By default game
+entities (NPCs, areas, rooms, items, and quests) are stored in YAML; Player data is stored in JSON files. This can
+be changed, however, by following the [Entity Loading](extending/loaders.md) guide.
+
+Ranvier then looks at the enabled bundles and follows the steps described below for each bundle
+
+#### Scripts
+
+Ranvier starts loading Javascript files into classes called `Manager`s and `Factory`s:
+
+* Quest goals/rewards to `QuestGoalManager` and `QuestRewardManager` respectively
+* Attributes definitions get loaded into the `AttributeFactory`
+* Entity behaviors to their respective `BehaviorManager`
+* Channels to the `ChannelManager`
+* Player class definitions to the `ClassManager`
+* Commands to the `CommandManager`
+* Effects to the `EffectFactory`
+* Input and Server events to their respective `EventManager`
+* Player events to the `PlayerManager`
+* and finally Skills to the `SkillManager`
+
+Some of these `Manager`s and `Factory`s are only used internally, the main ones you may interact with inside  a script
+or command include: `CommandManager` for executing commands, `EffectFactory` for creating effects and adding them to
+players or NPCs, and the `SkillManager` for having players or NPCs perform skills.
+
+#### Entities
+
+Definitions for all game entities are loaded into their respective `Factory`s, e.g., `AreaFactory`, `RoomFactory`, etc.
+from the configured data source. At this point all the definitions are loaded but none of those entities actually exist
+in the game. The distribution step handles that after all the bundles have finished the initialization step.
+
+### Distribution
+
+Once all the scripts and all the entity definitions from all bundles have been loaded:
+
+* `Area` instances are created from their definitions and added to the `AreaManager`
+* For each `Area` created the `hydrate` method is called. This will use all the entity definitions to create instances
+of rooms, npcs, and items and put them in their appropriate place
+
+### Startup
+
+At this point Ranvier triggers the `startup` event, notifying any bundles with `server-events` that the server has
+started.
+
+## Installing a bundle
+
+### From a git repository
+
+To install a bundle from a git repository there is a helper command which will install the repository as a git
+submodule. This is the recommended approach to install a bundle as it allows you to easily receive updates from the
+original author, or fork the bundle and do work on it without having all of the files live inside your project folder.
+
+From the root of your project run
+
+```sh
+npm install <git repository url>
+# for example
+npm install https://github.com/RanvierMUD/progressive-respawn
+```
+
+The bundle is now installed but not enabled, see the next section for enabling/disabling bundles
+
+### From a plain folder
+
+To install a bundle from a normal folder move or copy it into the `bundles/` directory of your project.
+
+Again, at this point the bundle is installed but not enabled.
+
+### Managing enabled bundles
+
+To enable or disable you can use the helper command  `npm run enable-bundle <bundle name>` or
+`npm run disable-bundle <bundle-name>`. This will add or remove the bundle from the `bundles` list in `ranvier.json`. If
+you wish to manually manage the list of enabled bundles you may edit that file manually.
+
+## Removing a bundle
+
+It's not necessary to remove bundles as you can disable them instead. With that said if you really want to remove a
+bundle, for a submodule bundle you can use the helper command `npm run remove-bundle <bundle name>`. For a normal folder
+bundle you can just delete the folder.
+
+## Creating a bundle
+
+To create a bundle make a folder under the `bundles/` directory. The name should not contain spaces or special
+characters. If you are so inclined you may also create the bundle as a separate repository and use the aforementioned
+repository bundle installation commands to add it to the project. That should be used if you intend on sharing the
+bundle with others. If you intend to keep the bundle only in your project a normal folder will do just fine.
+
 
 ### 3rd party node libraries in bundles
 
-Bundles are meant to be self-contained, shareable folders. With that in mind if your bundle relies on a node module
+Bundles are meant to be self-contained folders. With that in mind if your bundle relies on a node module
 not present the `package.json` that comes with Ranvier the suggested approach is the following:
 
-1. Create your bundle folder: `mkdir my-bundle` and move into it: `cd my-bundle`
-2. Run `npm init` and fill out the appropriate fields
-3. Now you can safely run `npm install --save some-3rd-party-package` and that dependency will be specific to your
-   bundle.
+1. Inside your bundle folder run `npm init` and fill out the appropriate fields
+3. Now you can safely run `npm install --save some-3rd-party-package` while inside your bundle and that dependency will
+   available inside the code of your bundle.
 
-Ranvier has a helper command to run `npm install` in all bundles by running `npm run bundle-install` from the root of
-the project.
+## Working in a bundle
+
+For a normal folder bundle you can edit/commit following your normal workflow.
+
+If you are working in a submodule bundle you will need a cursory understanding of how git submodules work. The official
+git submodule guide is a good reference for this:
+[https://git-scm.com/book/en/v2/Git-Tools-Submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules#_working_on_a_project_with_submodules).
+If you installed someone else's shared bundle, for example `progressive-respawn` or one of the example bundles, and you
+wish to make changes the suggested approach is to remove the original bundle, fork that repository, and add your fork
+as the bundle. If you make and commit changes without forking you will likely not be able to push them to that remote,
+as such you will not be able to carry your changes with you if you clone your project onto another server.
+
+## Next steps
+
+Now that you know how to install/create a bundle and enable it the next step is actually building your game. If you used
+the starter kit mentioned in the [Get Started](../get_started.md) guide you can go directly to
+the individual guides for building/scripting different parts of your game like [Commands](commands.md) or
+[Skills](skills.md).
+
+If you are making your game from scratch, or have only installed a networking bundle follow the [Creating Your
+Game](creating.md) guide.

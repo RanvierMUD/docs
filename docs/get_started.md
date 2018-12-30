@@ -6,65 +6,55 @@
 git clone git://github.com/shawncplus/ranviermud
 cd ranviermud
 npm install
-
-npm run bundle-install
 ```
 
-If you would like to use the latest, but perhaps not stable, features make sure you are on the
-`staging` branch.
+At this point you will have a very empty Ranvier install. From here there are two approaches: from scratch, or use the
+starter kit.
 
-### Yeoman Generator
+### Starter kit
 
-To make the creation of new bundle content easier Ranvier also has a Yeoman generator to generate the folders, files,
-and boilerplate for you. This is optional but will save a lot of time when extending Ranvier.
+To install the starter kit run `npm run init` and choose `Y` to install the example bundles. This will install a series
+of bundles which demonstrate various features of the engine. You can use them as-is to make your own game or clone them
+to customize them to your liking.
 
-    npm install -g yo
-    npm install -g generator-ranvier
+> NOTE: Be sure to read the [Bundles](extending/bundles.md) guide before editing the example bundles
 
-After installation type `yo ranvier` to see the usage.
+Once the command is finished start the server as described below. You will then be able to connect through `telnet`
+at hostname `localhost` on port 4000. The default login is `admin` for the username and `ranviermud` for the password.
 
-## Running the server
+### From scratch
 
-    ./ranvier
+If you wish to create a Ranvier game from scratch it's recommended that at minimum you install a server bundle to
+allow connections to your game. Being the `telnet-connections` or `websocket-connections` (or both) bundles. For details
+on installing and managing bundles see the [Bundles](extending/bundles.md) guide.
 
-## Connecting
+## Starting the server
 
-In another terminal execute `telnet localhost 4000` or use your favorite MUD client with hostname `localhost` and port 4000.
-(If you have customized the port, replace 4000 with whatever port you have configured Ranvier to use)
+Once you've installed (or not) the bundles you like to start the server run
 
-By default Ranvier ships with an admin account with the username `admin` and password `ranviermud`. It's recommended
-that after logging in you use the Change Password menu option to change the default password.
+```
+./ranvier
+```
 
-## Adding Content
+This will start the server but it may stop when you close your terminal. To keep the server running after you close your
+terminal there are various tools like [PM2](http://pm2.keymetrics.io/),
+[systemd](https://nodesource.com/blog/running-your-node-js-app-with-systemd-part-1/), and many others depending on your
+operating system/preference.
 
-To begin adding content you should first have an understanding of the [Project Structure](structure.md). After that all
-of the details of adding content can be seen in the [Bundles](extending/bundles.md) section.
+## Development workflow
 
-## Testing your changes
-
-In general we, the developers of Ranvier, consider hotbooting to be a bad practice (with one exception listed below)  as
-it literally encourages working "on live". To this end we encourage the following workflow for making changes to your
-game once it goes live:
-
-* Clone two repos of `ranviermud`: one you will use for development, and one you use for live.
-* In your development repo create a `dev` branch
-* For the dev branch change (but do not commit) the ranvier.json port to something different than the live port
-* Make your changes in your dev repo on the dev branch, restarting the dev server when you make and want to test changes
-* When you're happy with the changes you've made commit them to the dev branch, then merge them into the master branch
-  - commit then: `git checkout master`, `git merge --ff-only . dev`
-
-When you want to deploy your changes to your live server:
-
-* Move into your live repo and add your dev repo as a remote: `git remote add dev /path/to/dev/repo`
-* Pull in the master changes: `git fetch dev`, `git pull`
-* Restart the server
-
-In the future we might add functionality to make the development process easier with a `hotboot` command that is only
-active when in a certain 'environment' but for now the above workflow is what we recommend for the best player
-experience.
+When you make changes to bundles or the `ranvier.json` config you will generally need to restart the server to see the
+changes in game. This makes coding "on live" a Very Bad Idea&trade; as it would be very annoying for players. As such
+the recommended workflow is to have one checkout of `ranviermud` for development and another for your live server.
 
 ### Hotfixing commands
 
 While we do not support "hotbooting" the entire game without restarting the server it is possible to reload your
-commands from disk without restarting the server, if you have the `debug-commands` bundle enabled, with the `hotfix`
-admin command. See the [Commands](extending/commands.md) documentation for more details.
+commands from disk without restarting the server. If you have the `debug-commands` bundle enabled the `hotfix`
+admin command will allow you to reload a command in game by doing `hotfix <command name>`.
+
+
+## Next step
+
+The next step is understanding what a bundle is, how they are loaded into the game, and how to manage and edit them. For
+this follow the [Bundles](extending/bundles.md) guide.
