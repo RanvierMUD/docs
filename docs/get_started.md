@@ -3,7 +3,7 @@
 ## Installation
 
 ```sh
-git clone git://github.com/shawncplus/ranviermud
+git clone git://github.com/RanvierMUD/ranviermud
 cd ranviermud
 npm install
 ```
