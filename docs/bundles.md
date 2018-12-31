@@ -177,8 +177,7 @@ as such you will not be able to carry your changes with you if you clone your pr
 
 Now that you know how to install/create a bundle and enable it the next step is actually building your game.
 
-If you are making your game from scratch, or have only installed a networking bundle follow the [Creating Your
-Game](creating.md) guide.
+If you are making your game from scratch, or have only installed a networking bundle follow the [From Scratch](from_scratch.md) guide.
 
 If you used the starter kit mentioned in the [Get Started](../get_started.md) guide you can go directly to the
 individual guides. The documentation is split into two parts: Building and Coding.

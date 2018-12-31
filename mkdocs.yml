@@ -35,6 +35,7 @@ pages:
     - Quests: 'building/quests.md'
     - Scripting: 'building/scripting.md'
 - Coding:
+    - Attributes: 'coding/attributes.md'
     - Server Events: 'coding/server.md'
     - Channels: 'coding/channels.md'
     - Classes/Abilities: 'coding/classes.md'

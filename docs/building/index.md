@@ -4,11 +4,15 @@ Areas contain all the "content" of the MUD: items, npcs, rooms, and quests.
 
 ## Directory Structure
 
-A single bundle can contain multiple areas and like bundles an area need only
+A single bundle can contain multiple areas and, like bundles, an area need only
 have the files necessary for the content (i.e., you don't need to include a
-quests file if you have no quests.) For pedagogical completeness this example
+quests file if you have no quests.) For completeness this example
 bundle with a single area has all of the possible entities: items, npcs,
 scripts, and quests.
+
+> Note: This guide uses the default entity loading setup of using YAML files for
+content. This can be customized by following the
+[Entity Loading Customization](../extending/entity_loading.md) guide.
 
 Click on any of the items to see more in-depth tutorials on their contents.
 
@@ -34,8 +38,20 @@ Example Manifest
 ``` yaml
 ---
 title: "My Area Title"
-info:
-  respawnInterval: 60
+
+# metadata allows you to put any arbitrary data you want to use in scripts
+metadata:
+  someThing: "some custom data here"
+
+# Areas are scriptable just like other game entities. They can have both a
+# specific script file as well as behaviors. If you do not have a script
+# or behaviors you don't need to specify these fields
+script: "foo.js" # lives in scripts/foo.js of the area folder
+behaviors:
+  # example of having the area use the behavior called 'progressive-respawn'
+  # with configuration
+  progressive-respawn:
+    interval: 20
 ```
 
 `respawnInterval` _`number`_
@@ -43,7 +59,9 @@ info:
 
 ## Entity References
 
-You'll often see strings like `limbo:sliceofcheese`. These are entity references and can refer to Items, NPCs, Rooms, and Quests. The type of entity the reference points to is inferred from its context (e.g., `foo:bar` in an `items` list would point to an Item.) Let's take a look at an example NPC definition:
+You'll often see strings like `limbo:sliceofcheese`. These are entity references and can refer to Items, NPCs, Rooms,
+and Quests. The type of entity the reference points to is inferred from its context (e.g., `foo:bar` in an `items` list
+would point to an Item.) Let's take a look at an example NPC definition:
 
 Assuming both of these definitions live in `bundles/awesome-bundle/areas/foobar/`
 
@@ -60,7 +78,9 @@ and an accompanying item definition
   name: "Dirk of Awesomeness"
 ```
 
-In the definition of Dirk Jones, the value `foobar:dirk` in the `items` property's array means "Find item with the ID `dirk` in the area `foobar`". Entity ids are only unique within the same entity type of the same area. So even though Dirk Jone's entity reference is _also_ `foobar:dirk`, `items: ["foobar:dirk"]` would refer to an item.
+In the definition of Dirk Jones, the value `foobar:dirk` in the `items` property's array means "Find item with the ID
+`dirk` in the area `foobar`". Entity ids are only unique within the same entity type of the same area. So even though
+Dirk Jone's entity reference is _also_ `foobar:dirk`, `items: ["foobar:dirk"]` would refer to an item.
 
 This string will be described in the subsequent docs as `EntityReference`.
 
@@ -88,8 +108,8 @@ for (const z of area.floors) {
   const floor = area.map.get(z);
 
   /*
-  Each floor in the `map` is an instance of `AreaFloor` which has the low(X/Y) and high(X/Y) that you can use to define
-  your loop boundaries.
+  Each floor in the `map` is an instance of `AreaFloor` which has the low(X/Y)
+  and high(X/Y) that you can use to define your loop boundaries.
 
   In this case this code will just draw a square map of the entire area.
   */
@@ -110,5 +130,5 @@ for (const z of area.floors) {
 }
 ```
 
-You can see an example of mapping by looking at the `map` command inside `bundles/ranvier-commands/commands/map.js`. Further
-you can look at the `move` and `look` commands to see how the coordinates system is used to infer exits.
+You can see an example of mapping by looking at the `map` command inside `bundles/ranvier-commands/commands/map.js`.
+Further you can look at the `move` and `look` commands to see how the coordinates system is used to infer exits.
