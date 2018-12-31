@@ -170,7 +170,7 @@ So with that attribute a warrior with 20 `strength`, and a ring of +15 `attack_p
    65 attack_power
 ```
 
-### % bonuses
+#### % bonuses
 
 It's a common RPG pattern to have an attribute like `health` both static `+20 max health` and `+5%
 max health` bonuses. To accomplish this we will use two attributes: `health` and `health_percent`.
