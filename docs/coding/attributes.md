@@ -76,6 +76,11 @@ Computed attributes allow you to have an attribute which depends on other attrib
     // calculation. You may depend on attributes defined in a different bundle.
     requires: ['intellect'],
 
+    metadata: {
+      // some custom constant we'll use in the formula
+      levelMultiplier: 0.33,
+    },
+
     // 'fn' is the formula function. The function will automatically receive
     // as arguments:
     //   1. The character the attribute belongs to
@@ -88,7 +93,12 @@ Computed attributes allow you to have an attribute which depends on other attrib
     //      Each is the value, after effects/formulas, of that attribute
     fn: function (character, mana, intellect) {
       // Using the example formula from before:
-      return Math.floor(mana + intellect + character.level * 0.33);
+      return Math.floor(
+        mana +
+        intellect +
+        // to access the `metadata` inside the formula use `this.metadata`
+        character.level * this.metadata.levelMultiplier
+      );
     }
   }
 }
@@ -103,10 +113,12 @@ error when trying to run the server:
 error: Attribute formula for [attribute-a] has circular dependency [attribute-a -> attribute-b -> attribute-a]
 ```
 
-### Accessing Metadata
-You've seen formula fn's use the `function (a) { return a; }` style instead of arrow syntax like `(a) => a`. The reason
-is that `this` in a formula fn is the Attribute instance itself. Therefor you can use `this` to access the metadata of an
-attribute.
+### Recipes
+
+#### Class/race modifiers
+
+Example computed attribute which uses metadata to change the formula
+depending on the character's class.
 
 ```js
   {
@@ -135,6 +147,119 @@ attribute.
     },
   },
 ];
+```
+
+Because the modifiers are stored in the attribute metadata you can access this
+value outside of the formula as well. For example, if you wanted to create a
+command which shows the AP bonus for a character:
+
+```js
+const ap = character.getAttribute('attack_power');
+const characterClass = character.getMeta('class') || '_default';
+const modifier = ap.metadata.classModifiers[characterClass];
+Broadcast.sayAt(character, `You get ${modifier} AP per point of strength`);
+```
+
+So with that attribute a warrior with 20 `strength`, and a ring of +15 `attack_power` will have
+
+```
+   10 (base)
++  15 (ring effect)
++  20 (strength) * 2 (modifier)
+-----
+   65 attack_power
+```
+
+### % bonuses
+
+It's a common RPG pattern to have an attribute like `health` both static `+20 max health` and `+5%
+max health` bonuses. To accomplish this we will use two attributes: `health` and `health_percent`.
+
+* `health` will act as the base health attribute and handle static `+20 max health` style bonuses. This attribute will also
+  be used for the player taking damage/being healed.
+* `health_percent` will exist only to handle  `+5% max health` style bonuses and will generally only be modified by effects
+
+We'll use the formula:
+
+```
+(health + static bonus) * percentage bonus
+```
+
+```js
+[
+  {
+    name: 'health',
+    base: 100,
+    formula: {
+      requires: ['health_percent'],
+      fn: function (character, health, health_percent) {
+        // `health` will be our health pool after modified by our static bonuses
+        // like +20 max health
+
+        // health_percent will be a whole number like 25 so we've gotta turn
+        // 25 into 1.25
+        const modifier = (1 + (health_percent / 100));
+
+        return Math.round(health * modifier);
+      },
+    }
+  },
+
+  { name: 'health_percent', base: 0 },
+]
+```
+
+Let's take the following scenario:
+
+* Base `health` of 100
+* Wearing a ring with `+20 max health`
+* Has an effect that gives `+30% max health`
+* So the formula will look like:
+
+```
+(100 + 20) * (1 + (30 / 100))
+            =
+        120 * 1.30
+            =
+           156
+```
+
+If, however, you want to have the formula:
+
+```
+(health * percentage bonus) + static bonus`
+```
+
+We'll need to change  our formula slightly:
+
+```js
+// ...
+fn: function (character, health, health_percentage) {
+  // get the static bonus amount from the difference of base and current max health
+  const staticBonus = health  - this.base;
+
+  // again, health_percent will be a whole number like 25 so we've gotta turn
+  // 25 into 1.25
+  const modifier = (1 + (health_percent / 100));
+
+  return Math.round(health * modifier + staticBonus);
+},
+// ...
+```
+
+Now, given the same scenario:
+
+* Base `health` of 100
+* Wearing a ring with `+20 max health`
+* Has an effect that gives `+30% max health`
+* So the formula will look like:
+
+```
+(100 * (1 + (30 / 100))) + 20
+            =
+        130 + 20
+            =
+           150
 ```
 
 ## Giving Characters Attributes
