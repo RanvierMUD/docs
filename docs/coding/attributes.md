@@ -89,7 +89,6 @@ Computed attributes allow you to have an attribute which depends on other attrib
     fn: function (character, mana, intellect) {
       // Using the example formula from before:
       return Math.floor(mana + intellect + character.level * 0.33);
-      // it may seem strange to add mana as part of it
     }
   }
 }
