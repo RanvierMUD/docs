@@ -66,7 +66,7 @@ aware of how and when to access game data.
 
 Ranvier first reads the `ranvier.json` config to determine how data should get loaded into the game. By default game
 entities (NPCs, areas, rooms, items, and quests) are stored in YAML; Player data is stored in JSON files. This can
-be changed, however, by following the [Entity Loading](extending/loaders.md) guide.
+be changed, however, by following the [Entity Loaders](extending/entity_loaders.md) guide.
 
 Ranvier then looks at the enabled bundles and follows the steps described below for each bundle
 
@@ -177,9 +177,9 @@ as such you will not be able to carry your changes with you if you clone your pr
 
 Now that you know how to install/create a bundle and enable it the next step is actually building your game.
 
-If you are making your game from scratch, or have only installed a networking bundle follow the [From Scratch](from_scratch.md) guide.
+If you are making your game from scratch, or have only installed a networking bundle follow the [From Scratch](coding/from_scratch.md) guide.
 
-If you used the starter kit mentioned in the [Get Started](../get_started.md) guide you can go directly to the
+If you used the starter kit mentioned in the [Get Started](get_started.md) guide you can go directly to the
 individual guides. The documentation is split into two parts: Building and Coding.
 
 * Building is for... builders: the people creating areas, npcs, items, etc. Little to no programming experience is needed.
