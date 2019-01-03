@@ -42,7 +42,10 @@ mentioned the default Ranvier setup is to load areas from YAML so we'll use that
       */
 
       /* An arbitrary config passed to the DataSource constructor.  Each
-      DataSorce might have a different config: file paths, database details, etc. */
+      DataSorce might have a different config: file paths, database details, etc.
+      NOTE: If storing database credentials it's recommended you use the approach
+      detailed in the next section to keep that information out of source control
+      */
       "config": {
         "bundlePath": "bundles",
       }
@@ -68,6 +71,36 @@ mentioned the default Ranvier setup is to load areas from YAML so we'll use that
   },
 }
 ```
+
+### Sensitive Data
+
+It is very bad practice to keep sensitive information like database hostnames, usernames, or passwords in source
+control. As such it's a good idea to keep that information in local environment variables and read those in. To
+facilitate this the `ranvier.json` configuration can instead be read from a `ranvier.conf.js` JS file to allow the use
+of `process.env`.
+
+The only difference is that instead of a standard JSON file `ranvier.conf.js` should `module.exports` the configuration.
+
+```js
+// reuse the configs in ranvier.json so we don't have to duplicate our settings
+const config = require('./ranvier.json');
+
+// inject our environment variables into the config
+config.dataSources.MySql = {
+  require: './lib/some/dataSource.js',
+  config: {
+    hostname: process.env.RANVIER_MYSQL_HOSTNAME,
+    user: process.env.RANVIER_MYSQL_USER,
+    password: process.env.RANVIER_MYSQL_PASSWORD,
+  },
+};
+
+// export our updated config
+module.exports = config;
+```
+
+To make this easier you may want to use a tool like [dotenv](https://github.com/motdotla/dotenv). Make sure you **do
+not** store the `.env` files in git otherwise you will defeat the purpose of using environment variables.
 
 ## Required EntityLoaders
 
