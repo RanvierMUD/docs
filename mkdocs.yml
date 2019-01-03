@@ -43,6 +43,7 @@ pages:
     - Effects: 'coding/effects.md'
     - Player/Input Events: 'coding/input_events.md'
 - Extending:
-    - Entity Loading: 'extending/entity_loading.md'
+    - Entity Loaders: 'extending/entity_loaders.md'
+- From Scratch: from_scratch.md
 - Contributing: contributing.md
 - License/Credits: license.md

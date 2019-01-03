@@ -12,7 +12,7 @@ scripts, and quests.
 
 > Note: This guide uses the default entity loading setup of using YAML files for
 content. This can be customized by following the
-[Entity Loading Customization](../extending/entity_loading.md) guide.
+[Entity Loaders](../extending/entity_loaders.md) guide.
 
 Click on any of the items to see more in-depth tutorials on their contents.
 
