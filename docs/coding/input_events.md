@@ -28,7 +28,7 @@ bundles/my-bundle/
 ## File Structure
 
 In this example we'll implement the first event that ever gets fired once a player connects to Ranvier: 'intro'. This is the first input event
-and the only one that _must_ be implemented if you choose to disable the default `ranvier-input-events` bundle.
+and the only one that _must_ be implemented if you choose to disable the default `bundle-example-input-events` bundle.
 
 ```javascript
 'use strict';

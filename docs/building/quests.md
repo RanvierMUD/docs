@@ -7,8 +7,10 @@ this guide we will:
 * Create a quest giver for one of the quests
 * Create a room script that will give the player a quest when walking into the room
 
-> <i class="material-icons md-36">info</i> Ranvier's _[ranvier-quests](https://github.com/shawncplus/ranviermud/tree/staging/bundles/ranvier-quests/lib)_ bundle already includes goals for fetching/equipping items and killing npcs. It also includes
-reward types for experience (as outlined in this guide) and currency
+> <i class="material-icons md-36">info</i> Ranvier's
+> _[bundle-example-quests](https://github.com/RanvierMUD/bundle-example-quests)_ bundle includes example goals for
+> fetching/equipping items and killing npcs. It also includes reward types for experience (as outlined in this guide)
+> and currency
 
 [TOC]
 
@@ -42,8 +44,8 @@ We'll define a fetch goal as one that
 * optionally removes the items from the players inventory on completion
 
 First we will create a new bundle called `my-quests`, we'll use this bundle as a library for all of our quest types.
-And we'll create a file under this bundle in `quest-goals/FetchGoal.js`. So you should have a directory structure that looks
-like this:
+And we'll create a file under this bundle in `quest-goals/FetchGoal.js`. So you should have a directory structure that
+looks like this:
 
 ```
 bundles/
@@ -234,9 +236,9 @@ module.exports = class ExperienceReward extends QuestReward {
   /**
    * the display() method is given the same parameters as reward() and is not
    * directly used by the core but you may use it in your commands to display
-   * the rewards to the player. The default `ranvier-quests` bundle calls this
-   * when the player looks at their quest log, for example.
-
+   * the rewards to the player. For example the `bundle-example-quests` bundle
+   * calls this when the player looks at their quest log.
+   *
    * The method returns a string, that's it.
    */
   static display(GameState, quest, config, player) {
@@ -288,12 +290,11 @@ The structure of the `quests.yml` file is very similar to the `items.yml` file, 
 
   # if autoComplete is true the quest will trigger the complete event as soon
   # all of its goals are fulfilled. Otherwise you will need a command such as
-  # the `quest complete` command (defined in the `ranvier-quests` bundle) to
-  # make the quest complete
+  # the `quest complete` command (defined in the `bundle-example-quests` bundle)
   autoComplete: true
 
   # Description and title are not used by the core but should be used by your
-  # commands (such as `quest log` in the `ranvier-quests` bundle) to display
+  # commands (such as `quest log` in the `bundle-example-quests` bundle) to display
   # information to the user. title, description, and completionMessage may all
   # contain color tags.
   title: "A Journey Begins"
@@ -368,15 +369,12 @@ go over two examples of how you may want to do it.
 
 ### Questors
 
-The easiest approach is to make an NPC a quest giver (questor). This
-functionality is not a feature of the core engine itself but rather of the
-`quest` command in the `ranvier-quests` bundle. If you would like to modify the
-base functionality of how questors work, see the commands directory of that
-bundle.
+The easiest approach is to make an NPC a quest giver (questor). This functionality is not a feature of the core engine
+itself but rather of the `quest` command in the `bundle-example-quests` bundle. If you would like to modify the base
+functionality of how questors work, see the commands directory of that bundle.
 
-The base functionality of questors also includes updates to the `look` command
-in `ranvier-commands` which places small progress indicators next to the NPC's
-name when the player sees the NPC in the room. For example:
+The base functionality of questors also includes updates to the `look` command in `bundle-example-commands` which places
+small progress indicators next to the NPC's name when the player sees the NPC in the room. For example:
 
 ```
 [!] [NPC] Rat <-- The NPC has a quest available for the player
@@ -467,9 +465,8 @@ they don't already have the quest activated or completed).
 
 ## Displaying progress/completion
 
-Quests expose four player events that you can listen for to show a player's progress.
-The `ranvier-quests` bundle registers some basic handlers by default to show WoW-like progress
-notifications.
+Quests expose four player events that you can listen for to show a player's progress. For example the
+`bundle-example-quests` bundle registers some basic handlers by default to show WoW-like progress notifications.
 
 ```
 bundles/

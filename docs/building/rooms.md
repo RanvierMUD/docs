@@ -96,8 +96,8 @@ Doors are specified with the `doors` config on the room you want to block access
 Room A to run into a door when going east to Room B you specify the door config on Room B, not on Room A.  It should be
 noted that, while the `Room` object allows the definition of doors/locks, nothing in the core (or rooms themselves)
 block access based on these doors/locks, that is done inside the bundles. See the `move` command in the
-`ranvier-commands` bundle for an demonstration of how access is blocked or the `lock`/`open` commands to see how the
-doors are controlled.
+`bundle-example-commands` bundle for an demonstration of how access is blocked or the `lock`/`open` commands to see how
+the doors are controlled.
 
 > Note: When defining doors be careful to make sure you don't accidentally define a double door like a hotel room where
 > Room A has a door blocking access to Room B and Room B has _another_ door blocking access from Room A as this could

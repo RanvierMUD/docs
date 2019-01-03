@@ -130,5 +130,5 @@ for (const z of area.floors) {
 }
 ```
 
-You can see an example of mapping by looking at the `map` command inside `bundles/ranvier-commands/commands/map.js`.
+You can see an example of mapping by looking at the `map` command inside `bundles/bundle-example-commands/commands/map.js`.
 Further you can look at the `move` and `look` commands to see how the coordinates system is used to infer exits.

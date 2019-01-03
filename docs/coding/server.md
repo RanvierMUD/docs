@@ -39,11 +39,12 @@ module.exports = {
 
 ### Example
 
-Ranvier, out of the box, contains a bundle called `ranvier-telnet` which is enabled by default, this sets up Ranvier to
-allow telnet based connections. With that in mind let's create our own bundle that will use websockets instead.
+If using the starter kit Ranvier inclues a bundle called `telnet-networking` which is enabled by default, this sets up
+Ranvier to allow telnet based connections. With that in mind let's create our own bundle that will use websockets
+instead.
 
-> Note: Ranvier comes with a websocket connection bundle but it is now enabled by default, you don't actually have to
-> write your own just enable the bundle. However, this example remains for pedagogical purposes.
+> Note: The starter kit includes `websocket-networking` as well, you don't actually have to write your own. However,
+> this example remains for pedagogical purposes.
 
 First our bundle will need a 3rd party library so follow the process described in the [Bundles](../bundles.md) guide to
 install the `ws` node module.
@@ -154,7 +155,7 @@ module.exports = {
         stream.write("Connecting...\n");
         Logger.log("User connected via websocket...");
 
-        // @see: bundles/ranvier-events/events/login.js
+        // @see: bundles/bundle-example-input-events/events/login.js
         stream.emit('intro', stream);
       });
     },
@@ -168,5 +169,6 @@ module.exports = {
 
 ### Enabling our bundle
 
-Finally inside `ranvier.json` in the root of the project replace `ranvier-telnet` with `my-bundle` and Bob's your uncle, as they say.
-Completely rewriting the network layer of the game engine in less than 100 lines of code including comments: not bad at all.
+Finally inside `ranvier.json` in the root of the project replace `telnet-networking` with `my-bundle` and Bob's your
+uncle, as they say.  Completely rewriting the network layer of the game engine in less than 100 lines of code including
+comments: not bad at all.

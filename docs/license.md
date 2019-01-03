@@ -18,4 +18,4 @@ Shawn Biddle ([github.com/shawncplus](https://github.com/shawncplus))
 * Sean O'Donohue ([github.com/seanohue](https://github.com/seanohue))
 * Josh Williams ([github.com/jackjwilliams](https://github.com/jackjwilliams))
 
-A full list of contributors can be found at [https://github.com/shawncplus/ranviermud/graphs/contributors](https://github.com/shawncplus/ranviermud/graphs/contributors)
+A full list of contributors can be found at [https://github.com/RanvierMUD/ranviermud/graphs/contributors](https://github.com/RanvierMUD/ranviermud/graphs/contributors)

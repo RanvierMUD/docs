@@ -4,7 +4,7 @@ copyright: Copyright &copy; 2017, Shawn Biddle
 site_author: Shawn Biddle
 docs_dir: docs
 site_dir: ../site
-repo_url: https://github.com/shawncplus/ranviermud
+repo_url: https://github.com/RanvierMUD/ranviermud
 theme:
     name: null
     custom_dir: docs/_mkdocs/theme/ranvier
