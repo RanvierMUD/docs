@@ -54,9 +54,6 @@ behaviors:
     interval: 20
 ```
 
-`respawnInterval` _`number`_
-:    Number of seconds between respawn ticks. See the [Room](rooms.md) section for details on handling respawn. Defaults to 60.
-
 ## Entity References
 
 You'll often see strings like `limbo:sliceofcheese`. These are entity references and can refer to Items, NPCs, Rooms,
