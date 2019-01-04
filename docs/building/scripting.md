@@ -12,6 +12,7 @@ Unique scripts are stored under the `scripts/` folder for a given area with a su
 ```
 bundles/my-area/areas/limbo/
   scripts/
+    limbo.js // area script
     npcs/
       rat.js
     items/
@@ -56,6 +57,7 @@ bundles/my-bundle/
       aggro.js
     items/
     rooms/
+    area/
 ```
 
 ### File Structure
