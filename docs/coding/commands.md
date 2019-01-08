@@ -64,6 +64,9 @@ const { Broadcast } = require('ranvier');
 module.exports = {
   // `usage` is shown when viewing the helpfile for a command, see the Helpfiles section for more detail
   usage: 'inventory',
+  metadata: {
+    someData: 'you can use the metadata config to store any extra settings'
+  },
   command : state => (args, player) => {
     if (!player.inventory || !player.inventory.size) {
       /*
