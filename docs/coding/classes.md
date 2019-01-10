@@ -268,3 +268,9 @@ module.exports = {
   }
 };
 ```
+
+## Customizing Cooldowns
+
+As demonstrated above a skill can be configured to have a cooldown length. The cooldown is implemented internally by an
+effect with the id `cooldown`. You can customize the details of this effect by creating your own effect with the id
+`cooldown` in a bundle which will override the default. See the [Effects](effects.md) guide for more detail.
