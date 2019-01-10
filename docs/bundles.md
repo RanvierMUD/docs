@@ -161,6 +161,21 @@ not present the `package.json` that comes with Ranvier the suggested approach is
 3. Now you can safely run `npm install --save some-3rd-party-package` while inside your bundle and that dependency will
    available inside the code of your bundle.
 
+### Requiring code from another bundle
+
+It is a common case that you have a "lib" bundle that contains some shared code. The `@bundles` alias exists to make
+including these files easier so you don't have to remember how many `../` you need:
+
+```js
+// standard require
+const SomeLib = require('../../some-lib-bundle/lib/SomeLib');
+
+// using @bundles alias
+const SomeLib = require('@bundles/some-lib-bundle/lib/SomeLib');
+```
+
+Using the `@bundles` alias is completely optional but is the recommended approach.
+
 ## Working in a bundle
 
 For a normal folder bundle you can edit/commit following your normal workflow.
