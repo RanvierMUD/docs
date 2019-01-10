@@ -131,17 +131,10 @@ module.exports = {
   and the target of the skill
   */
   run: state => function (args, player, target) {
-    // This is a simple damage skill so we'll create a new damage instance
-    const damage = new Damage({
-      // we'll damage the health of the target
-      attribute: 'health',
-      // for 250% of the player's weapon damage
-      amount: getDamage(player),
-      attacker: player,
+    // This is a simple damage skill so we'll create a new damage instance.
+    // See the Attributes guide for more details
+    const damage = new Damage('health', getDamage(player), player, this, {
       type: 'physical',
-      // Setting damage 'source' property to 'this' will show the skill that caused the
-      // damage to the target
-      source: this
     });
 
     // Show some flashy effects to the player, target, and the other players in the room
@@ -265,12 +258,8 @@ module.exports = {
 
       Broadcast.sayAt(this.target, "<bold><yellow>You catch a second wind!</bold></yellow>");
       // create the Heal to heal the player's energy
-      const heal = new Heal({
-        amount: Math.floor(this.target.getMaxAttribute('energy') * (this.state.restorePercent / 100)),
-        attacker: this.target,
-        attribute: 'energy',
-        source: this.skill
-      });
+      const amount = Math.floor(this.target.getMaxAttribute('energy') * (this.state.restorePercent / 100));
+      const heal = new Heal('energy', amount, this.target, this.skill);
       heal.commit(this.target);
 
       // manually start the cooldown of the skill

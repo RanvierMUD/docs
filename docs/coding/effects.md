@@ -241,11 +241,7 @@ module.exports = {
       }
 
       // heal them for this effect's magnitude amount
-      const heal = new Heal({
-        attribute: "health",
-        amount: this.state.magnitude,
-        attacker: this.target,
-        source: this,
+      const heal = new Heal('health', this.state.magnitude, this.target, this, {
         hidden: true,
       });
       heal.commit(this.target);

@@ -319,7 +319,7 @@ Formula
 :    As already described in this guide an attribute may have a custom formula to obtain its final value.
 
 `delta`
-:    This property is used to keep track of how much the attribute has changed. Delta is always <= 0.  Meaning that
+:    This property is used to keep track of how much the attribute has changed. Delta is always &lt;= 0.  Meaning that
 without an effect or custom formula an attribute can never have a value above its base. The value of `delta` is changed
 via `Damage`, `Heal`, or direct calls to `character.lowerAttribute`/`character.raiseAttribute`. The usage of which is
 described in the [Modifying Attributes](#modifying-attributes) section.
@@ -395,25 +395,32 @@ Let's take an example of a script where we want an NPC to deal damage to a playe
 ```js
 const { Damage } = require('ranvier');
 
-const somedamage = new Damage({
-  // amount is self-explanatory and is required
-  amount: 20,
+const somedamage = new Damage(
+  // 1st argument specifies which attribute we are causing damage to.
+  // Damage/Heal aren't limited to health. You can, and should, use them for any
+  // time _any_ attribute is lowered
+  'health',
 
-  // attribute is another required config which specifies which attribute we are
-  // causing damage to. Damage/Heal aren't limited to health. You can, and should,
-  // use them for any time _any_ attribute is lowered
-  attribute: 'health',
+  // 2nd argument is the amount of damage/healing
+  20,
 
-  // attacker is an optional property. It can be any game entity: an Area, Room,
-  // NPC, Player, or Item. It will be the recipient of the 'hit' event
-  attacker: someNPC,
+  // 3rd arg is optional and is the entity causing the damage: It can be any
+  // game entity: an Area, Room, NPC, Player, or Item. It will be the
+  // recipient of the 'hit' event
+  someNPC,
 
-  // Another optional property is `metadata` which acts as a place for you to
+  // 4th is optional and is the source of the damage. While the attacker may
+  // be the NPC, the source might be the skill they used. In this case there
+  // is no particular source
+  null,
+
+  // Last argument is optional `metadata` which acts as a place for you to
   // put any extra info about this damage that is not a core property.
   // For example:
-  metadata: {
+  {
     type: 'fire',
     critical: false,
+    hidden: false,
   },
 });
 
@@ -446,11 +453,6 @@ Here's an example of a potion healing the player
 ```js
 const { Heal } = require('ranvier');
 
-const someheal = new Heal({
-  amount: 20,
-  attribute: 'health',
-  attacker: this, // `this` here being the potion Item
-});
-
+const someheal = new Heal('health', 20, potionItem);
 someheal.commit(player);
 ```
