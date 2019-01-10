@@ -103,6 +103,69 @@ the doors are controlled.
 > Room A has a door blocking access to Room B and Room B has _another_ door blocking access from Room A as this could
 > cause the player to have to open two doors every time they moved between the rooms.
 
+## Determining exits in scripts
+
+As seen above in the example definitions an area's Rooms may have coordinate based exits or explicitly defined exits or
+both. This makes determining the exits for a given `Room` a little tricky. To help with this the `Room#getExits()`
+method will return a list of both explicitly defined exits as well as exits it infers from coordinates.
+
+The room definition below has both coordinates and an explicitly defined "east" direction:
+
+```yaml
+# let's say this in the area called "mapped"
+
+- id: hallway-south-2
+  title: Hallway South 2
+  coordinates: [0, -2, 0]
+  description: "You are in the south hallway."
+- id: attic-south
+  title: Attic
+  coordinates: [0, -2, 1]
+  description: "You are in the attic."
+  # this room has inferred exits from its coordinates and also manually
+  # specifies an exit to leave the area
+  exits:
+    - direction: east
+      roomId: "limbo:white"
+```
+
+```js
+// The `room` variable here will refer to the instance of the above defined room
+
+console.log(room.getExits());
+
+// Room#getExits returns an array of both inferred and explicit exits
+[
+  {
+    // `roomId` will be the entityReference of the room
+    roomId: 'mapped:hallway-south-2',
+
+    // if inferred from coordinates `direction` will be one of: north, east,
+    // south, west, up, down, northeast, southeast, southwest, or southeast.
+    // Depending on which makes most sense given the coordinates.
+    direction: 'down',
+
+    // `inferred` is true if it was discovered from the room's coordinates and
+    // the nearby rooms
+    inferred: true
+  },
+
+  {
+    roomId: 'limbo:white',
+
+    // the explicitly defined exit will have a `direction` specified by its
+    // configuration in the room definition. The string is completely arbitrary
+    // and does _not_ need to be one of the 10 "standard" directions.
+    // NOTE: If there is an explicitly defined exit whose direction is the same
+    // as an inferred exit, the inferred exit will not be included in the list.
+    direction: 'east',
+
+    // This was an explicitly defined exit, therefor not inferred
+    inferred: false,
+  },
+]
+```
+
 ## Definition Fields
 
 `field` _`type`_ `(default)`
