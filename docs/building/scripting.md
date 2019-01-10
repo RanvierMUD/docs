@@ -1,6 +1,6 @@
-All entities in Ranvier can be scripted: Items, NPCs, and Rooms. There are two ways to script an entity: a unique
+All entities in Ranvier can be scripted: Items, NPCs, Rooms, and Areas. There are two ways to script an entity: a unique
 script, or a behavior.  A unique script is a non-configurable script attached directly to that entity. Each entity can
-only have one unique script.  Behaviors, on the other hand, are configurable, reusable, and an entity may have many
+only have one unique script. Behaviors, on the other hand, are configurable, reusable, and an entity may have many
 behaviors.
 
 [TOC]
@@ -85,7 +85,43 @@ Example behavior configuration for an item:
   behaviors:
     test:
       hello: "World"
+    # if your behavior has no configuration, simply use 'true' as its config
+    some-behavior: true
 ```
+
+## Behaviors as Flags &amp; metadata
+
+In previous versions of Ranvier it was suggested to use a behavior without a script as a way to "flag" entities. This is
+no longer needed as all entities now have a `metadata` property. As such you can use the metadata to create the flag
+instead:
+
+```yaml
+- id: 9
+  name: 'My Item'
+  behaviors:
+    # normal behavior
+    test:
+      hello: "World"
+  # you may now use the metadata field to set any flags you wish to have
+  metadata:
+    cursed: true
+    otherThing: "foobar"
+    someDeep:
+      metaObject:
+        bar: "baz"
+```
+
+The old way will still work but will issue a warning on server startup.
+
+You can access the metadata in scripts/commands with the `getMeta()` method:
+
+```js
+const isCursed = someItem.getMeta('cursed'); // true
+const badMeta = someItem.getMeta('doesntExist'); // undefined
+const otherThing = someItem.getMeta('otherThing'); // "foobar"
+const deepBar = someItem.getMeta('someDeep.metaObject.bar') // "baz"
+```
+
 ## Triggering a script/behavior
 
 You may have something like the following in your code. It could be in a command or skill or even another script
