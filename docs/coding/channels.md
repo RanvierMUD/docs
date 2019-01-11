@@ -164,3 +164,45 @@ module.exports = [
   }),
 ];
 ```
+
+## Scripting
+
+Game entities (Area, Room, NPC, Player) can be scripted based on the `channelReceive` event to react to messages. Below
+is an example script for a `Room` which opens a locked door when the player says a specific word:
+
+```js
+'use strict';
+
+const { Broadcast } = require('ranvier');
+
+module.exports = {
+  listeners: {
+    channelReceive: state => function (channel, sender, message) {
+      // we only care about the 'say' channel
+      if (channel.name !== 'say') {
+        return;
+      }
+
+      // check to see if they have spoken elvish "Friend"
+      if (!message.toLowerCase().match(/\bmellon\b/)) {
+        return;
+      }
+
+      // find the door to the next room. `this` is the current room
+      const downExit = this.getExits().find(ex => ex.direction === 'down');
+      const nextRoom = state.RoomManager.getRoom(downExit.roomId);
+
+      Broadcast.sayAt(sender, 'You have spoken "friend", you may now enter.');
+
+      nextRoom.unlockDoor(this);
+      nextRoom.openDoor(this);
+
+      Broadcast.sayAt(sender, 'A large stone rumbles out of the way, revealing a staircase downward.');
+    }
+  }
+};
+```
+
+Because NPCs and Players get this event that means an `Effect` can listen for it. This allows for crazy things like
+equipment that talks back to the player, damaging a player if they say a bad word, a charm effect that allows a player
+to command an NPC by speaking to it. The sky's the limit.
