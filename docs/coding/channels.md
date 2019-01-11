@@ -18,7 +18,9 @@ below show only one channel per file but you can absolutely have multiple channe
 ```javascript
 'use strict';
 
-const { Channel } = require('ranvier');
+/* The Channel module also exports channel related Error classes, we only need
+   the actual Channel class */
+const { Channel } = require('ranvier').Channel;
 
 module.exports = [ ];
 ```
@@ -32,7 +34,8 @@ This `chat` channel is an example of a game-wide communication channel. All play
 ```javascript
 'use strict';
 
-const { WorldAudience, Channel, PlayerRoles } = require('ranvier');
+const { WorldAudience, PlayerRoles } = require('ranvier');
+const { Channel } = require('ranvier').Channel;
 
 module.exports = [
   new Channel({
@@ -75,14 +78,15 @@ module.exports = [
 ```javascript
 'use strict';
 
-const { Channel, RoomAudience } = require('ranvier');
+const { RoomAudience } = require('ranvier');
+const { Channel } = require('ranvier').Channel;
 
 module.exports = [
   new Channel({
     name: 'say',
     color: ['cyan'],
     description: 'Send a message to all players in your room',
-    audience: new AudienceRoom(),
+    audience: new RoomAudience(),
 
     /*
     formatter allows you to customize how message from this channel appear to the sender and receiver
@@ -110,14 +114,15 @@ module.exports = [
 ```javascript
 'use strict';
 
-const { Channel, RoomAudience } = require('ranvier');
+const { PrivateAudience } = require('ranvier');
+const { Channel } = require('ranvier').Channel;
 
 module.exports = [
   new Channel({
     name: 'tell',
     color: ['bold', 'cyan'],
     description: 'Send a private message to another player',
-    audience: new AudiencePrivate(),
+    audience: new PrivateAudience(),
     formatter: {
       sender: function (sender, target, message, colorify) {
         return colorify(`You tell ${target.name}, '${message}'`);
@@ -138,14 +143,15 @@ module.exports = [
 ```javascript
 'use strict';
 
-const { Channel, AreaAudience } = require('ranvier');
+const { AreaAudience } = require('ranvier');
+const { Channel } = require('ranvier').Channel;
 
 module.exports = [
   new Channel({
     name: 'yell',
     color: ['bold', 'red'],
     description: 'Send a message to everyone in your area',
-    audience: new AudienceArea(),
+    audience: new AreaAudience(),
     formatter: {
       sender: function (sender, target, message, colorify) {
         return colorify(`You yell, '${message}'`);
