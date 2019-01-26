@@ -447,14 +447,18 @@ module.exports = {
   listeners: {
     // Set up a listener for when a player enters the room
     playerEnter: state => function (player) {
-      // use the QuestFactory from the GameState to find quest `limbo:journeybegins` (Journey Begins)
-      let quest = state.QuestFactory.create(state, 'limbo:journeybegins', player);
+      // entityReference of the quest we want to start
+      const questRef = 'limbo:journeybegins';
 
-      if (player.questTracker.canStart(quest)) {
+      // first check if the player can start the quest based on the quest's
+      // prerequisites, if it's already progress, or if it's completed and not
+      // repeatable
+      if (state.QuestFactory.canStart(player, questRef) {
+        // Create an instance of the Quest
+        const quest = state.QuestFactory.create(state, questRef, player);
+        // tell the player's quest tracker to start the quest
         player.questTracker.start(quest);
       }
-
-      // It's as simple as that: get the quest, check if the player can start it, start it
     }
   }
 };
