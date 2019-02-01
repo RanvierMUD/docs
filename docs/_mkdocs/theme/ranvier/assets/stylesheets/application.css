@@ -506,6 +506,12 @@ hr {
   .md-nav__source {
     display: none; }
 
+.md-nav__version {
+  color: #666;
+  font-style: italic;
+  padding-left: 1.2rem;
+}
+
 .md-search__overlay {
   display: none;
   pointer-events: none; }

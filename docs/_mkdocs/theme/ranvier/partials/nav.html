@@ -12,6 +12,7 @@
       {% include "partials/source.html" %}
     </div>
   {% endif %}
+  <label class="md-nav__version">Current Version: 3.0</label>
   <ul class="md-nav__list" data-md-scrollfix>
     {% for nav_item in nav %}
       {% set path = "nav-" + loop.index | string %}
