@@ -2,39 +2,10 @@
 
 ## Player Classes
 
-Player Classes in Ranvier is an intentionally loose concept. Classes are basically just a JavaScript file which returns
-a class configuration object that gets set on the Player. Any functionality of what classes do or how they modify player's interactions
-is completely ignored by the engine. The default bundles do have an _example_ implementation that you can use to go
-off of but it's entirely up to you if you want to use player classes at all. With that said let's take a quick look at how
-the example bundle `bundle-example-classes` implements a player class.
-
-```
-bundles/ranvier-classes/
-  classes/
-    warrior.js
-```
-
-```javascript
-'use strict';
-
-module.exports = {
-  // Display name for the class, used by the default `score` command.
-  name: 'Warrior',
-  // Description of the class rendered on the character creation screen (see default input events)
-  description: 'Warriors relish being face-to-face with their enemy. Whether it be wielding axes, maces, swords, or a nearby log, Warriors focus on dealing strong physical damage to their opponent. What they lack in the raw magical damage of a Mage, or the healing prowess of a Cleric, Warriors make up for in their tenacity. Those choosing the more defensive path of the shield can outlast otherwise deadly attacks.',
-  // This "abilityTable" is used in `bundle-example-classes/` to assign skills on levelup and when a skill is used to check
-  // if the player actually has access to it
-  abilityTable: {
-    3: { skills: ['rend'] },
-    5: { skills: ['lunge'] },
-    7: { skills: ['shieldblock'] },
-   10: { skills: ['secondwind'] },
-  }
-};
-```
-
-That's it, by default there is not much to making a class. Do what you want with them, get creative. Make a classless MUD or make
-sub-classes, it's all up to you.
+It may sound strange but there is no such thing as Player or NPC classes in the Ranvier engine. The engine simply has
+skills and how you decide to restrict the usage of those skills is up to you. There is an example implementation of
+player classes as well as class selection during character creation in the example bundles if you wish to implement them
+in your game.
 
 ## Skills/Spells
 

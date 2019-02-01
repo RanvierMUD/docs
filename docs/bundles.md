@@ -19,9 +19,6 @@ possible, i.e., try to keep input events out of the same bundle you're building 
 <dt><strong>behaviors/</strong></dt>
 <dd>Scripts that are shared between entities of the same type, e.g., a behavior to have an NPC wander around an area</dd>
 
-<dt><strong>classes/</strong></dt>
-<dd>Player classes</dd>
-
 <dt><strong>commands/</strong></dt>
 <dd>What it says on the tin, commands to add to the game</dd>
 
