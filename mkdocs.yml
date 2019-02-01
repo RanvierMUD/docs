@@ -24,9 +24,10 @@ markdown_extensions:
 google_analytics: ["UA-28253658-1", "auto"]
 
 pages:
-- Overview: index.md
-- Get Started: get_started.md
-- Bundles: bundles.md
+- Overview: 'index.md'
+- Get Started: 'get_started.md'
+- Release Notes: 'release_notes.md'
+- Bundles: 'bundles.md'
 - Building:
     - Creating an Area: 'building/index.md'
     - Items: 'building/items.md'
@@ -45,5 +46,5 @@ pages:
     - From Scratch: 'coding/from_scratch.md'
 - Extending:
     - Entity Loaders: 'extending/entity_loaders.md'
-- Contributing: contributing.md
-- License/Credits: license.md
+- Contributing: 'contributing.md'
+- License/Credits: 'license.md'

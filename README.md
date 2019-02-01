@@ -17,6 +17,7 @@ From the docs directory run
 ```
 pip install -r docs/_mkdocs/requirements.txt
 pip install mkdocs==0.17.3
+touch docs/{index,contributing}.md
 ```
 
 Finally run `./build.sh`
