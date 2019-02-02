@@ -5,8 +5,9 @@
 ```sh
 git clone git://github.com/RanvierMUD/ranviermud
 cd ranviermud
-npm install
+npm ci
 ```
+> Note: It is not recommended to run as a root user. Some scripts may malfunction and in general it's bad practice.
 
 At this point you will have a very empty Ranvier install. From here there are two approaches: from scratch, or use the
 starter kit.
