@@ -116,9 +116,9 @@ original author, or fork the bundle and do work on it without having all of the 
 From the root of your project run
 
 ```sh
-npm install <git repository url>
+npm run install-bundle <git repository url>
 # for example
-npm install https://github.com/RanvierMUD/progressive-respawn
+npm run install-bundle https://github.com/RanvierMUD/progressive-respawn
 ```
 
 The bundle is now installed but not enabled, see the next section for enabling/disabling bundles
@@ -131,9 +131,7 @@ Again, at this point the bundle is installed but not enabled.
 
 ### Managing enabled bundles
 
-To enable or disable you can use the helper command  `npm run enable-bundle <bundle name>` or
-`npm run disable-bundle <bundle-name>`. This will add or remove the bundle from the `bundles` list in `ranvier.json`. If
-you wish to manually manage the list of enabled bundles you may edit that file manually.
+To enable or disable a bundle simply add or remove it from the `bundles` array in `ranvier.json` in the root of the project.
 
 ## Removing a bundle
 
