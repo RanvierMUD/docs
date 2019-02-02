@@ -32,7 +32,7 @@ bundles/my-bundle/
 const { Broadcast, Damage, SkillType } = require('ranvier');
 
 // import custom lib from another bundle
-const Combat = require('@bundles/bundle-example-combat/lib/Combat');
+const Combat = require('../../bundle-example-combat/lib/Combat');
 
 // It's handy to define the different "tuning knobs" of skills right near the top all in one place so you can easily
 // change them if you need to.

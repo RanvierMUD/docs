@@ -158,18 +158,13 @@ not present the `package.json` that comes with Ranvier the suggested approach is
 
 ### Requiring code from another bundle
 
-It is a common case that you have a "lib" bundle that contains some shared code. The `@bundles` alias exists to make
-including these files easier so you don't have to remember how many `../` you need:
+It is a common case that you have a "lib" bundle that contains some shared code, as such it is entirely possible to
+require code from another bundle.
 
 ```js
-// standard require
+// Assuming we were in bundles/my-command-bundle/commands/somecommand.js
 const SomeLib = require('../../some-lib-bundle/lib/SomeLib');
-
-// using @bundles alias
-const SomeLib = require('@bundles/some-lib-bundle/lib/SomeLib');
 ```
-
-Using the `@bundles` alias is completely optional but is the recommended approach.
 
 ## Working in a bundle
 
