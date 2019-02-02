@@ -1,6 +1,6 @@
 site_name: Ranvier
 site_description: "Ranvier is a Node.js-based MUD codebase built for modularity, extensibility and getting up-and-running in the least amount of time possible."
-copyright: Copyright &copy; 2017, Shawn Biddle
+copyright: Copyright &copy; 2019, Shawn Biddle
 site_author: Shawn Biddle
 docs_dir: docs
 site_dir: ../site
