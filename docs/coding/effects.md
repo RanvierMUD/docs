@@ -400,7 +400,6 @@ module.exports = {
   }
 };
 ```
-
 ## Using Effects
 
 Above we've implemented new effect types, now we'll actually use those effects during
@@ -432,7 +431,6 @@ module.exports = {
     // To create an instance of an effect you use the EffectFactory
     const effect = state.EffectFactory.create(
       'buff', // specifying the effect type (name of the effect file minus .js)
-      player, // the target the effect should apply to
       /*
       a config override, in this case set a duration of 15 seconds instead of the
       default 30
@@ -468,6 +466,70 @@ module.exports = {
 The same pattern is used for all effects we've implemented: Use `EffectFactory.create` to
 create a new instance of the effect with any overrides you may want then call
 `addEffect(yourEffect)` on the target character.
+
+## Accessing GameState
+
+An example could be that you have an effect on a player that causes any healing done to provide an additional 50%
+healing as a heal-over-time effect. To achieve this the `listeners` config can also be defined as a function.
+
+### Standard
+
+```js
+module.exports = {
+  // ...
+  listeners: {
+    heal: function () {},
+  },
+};
+```
+
+### With GameState
+
+```js
+module.exports = {
+  // ...
+
+  // listeners here is a function with one argument, the GameState, and
+  // returning the standard listeners object
+  listeners: state => ({
+    heal: function () {},
+  }),
+};
+```
+
+
+### Example
+
+```js
+'use strict';
+
+const { Broadcast, EffectFlag } = require('ranvier');
+
+/**
+ * Implementation effect for a Rend damage over time skill
+ */
+module.exports = {
+  config: {
+    name: 'Bonus Healing',
+    type: 'skill:bonushealing'
+  },
+  flags: [EffectFlag.BUFF],
+
+  // instead of a standard `listeners: { /* ... /* }` object, `listeners` can be
+  // a function accepting GameState as an argument and returns the normal object
+  listeners: state => ({
+    heal: function (heal, target, finalAmount) {
+      const newHealAmount = Math.floor(finalAmount / 2);
+      const hotEffect = state.EffectFactory.create(
+        'bonus-hot',
+        { duration: 5000 },
+        { amount: newHealAmount },
+      );
+      target.addEffect(hotEffect);
+    }
+  })
+};
+```
 
 ## Further Reading
 
