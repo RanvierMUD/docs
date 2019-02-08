@@ -95,13 +95,9 @@ detect the item type
 :    List of behaviors to attach to this item. The key is the behavior name, the value is the configuration object for that
 behavior. For boolean (on/off) behaviors, `true` suffices for the config. (See [Scripting](scripting.md) for more on creating behaviors)
 
-`slot` _`string`_
-:    If the item can be equipped, `slot` identifies the `wear` location of the item. This can be an arbitrary string but
-you probably want to limit equipment to a standard list of locations
-
-`attributes` _`object`_
-:    Arbitrary list of attributes to attach to this object. There are no constraints on this so you are free to assign
-basically anything here that you want to look for inside commands/scripts/etc. Accessible in scripts via the `item.attributes` property
+`metadata` _`object`_
+:    Arbitrary container to place any extra data you want. There are no constraints on this so you are free to assign
+basically anything here that you want to look for inside commands/scripts/etc. Accessible in scripts via the `item.getMeta()` method
 
 `items` _`array<EntityReference>`_
 :    For containers. A list of Entity References identifying which items should be loaded into this item's inventory
