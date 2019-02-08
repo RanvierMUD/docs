@@ -93,7 +93,7 @@ detect the item type
 
 `behaviors` _`Object<string,Object>`_
 :    List of behaviors to attach to this item. The key is the behavior name, the value is the configuration object for that
-behavior. For boolean (on/off) behaviors, `true` suffices for the config. (See [Scripting](scripting.md) for more on creating behaviors)
+behavior. (See [Scripting](scripting.md) for more on creating behaviors)
 
 `metadata` _`object`_
 :    Arbitrary container to place any extra data you want. There are no constraints on this so you are free to assign

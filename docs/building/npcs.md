@@ -21,8 +21,6 @@ In Ranvier all NPCs for an area are defined in a single file within the area fol
 - id: wiseoldman
   keywords: ["wise", "old", "man"]
   name: "Wise Old Man"
-  behaviors:
-    pacifist: true
   description: "A wise looking old man sits on the ground with legs crossed."
 - id: 3
   keywords: ["dummy", "target", "practice"]
@@ -62,7 +60,7 @@ some extra attributes. The old man is the most basic NPC you can have.
 
 `behaviors` _`Object<string,Object>`_
 :    List of behaviors to attach to this NPC. The key is the behavior name, the value is the configuration object for that
-behavior. For boolean (on/off) behaviors, `true` suffices for the config. (See [Scripting](scripting.md) for creating behaviors)
+behavior. (See [Scripting](scripting.md) for creating behaviors)
 
 `metadata` _`object`_
 :    A place to put other data you want to access inside scripts/behaviors/commands/etc. that doesn't fit into one of the existing properties. See `Character.getMeta` and `Character.setMeta`. Note: changes to metadata while the server is running will be lost when the server is shut down.
