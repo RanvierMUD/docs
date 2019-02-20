@@ -23,8 +23,8 @@ In Ranvier all NPCs for an area are defined in a single file within the area fol
   name: "Wise Old Man"
   description: "A wise looking old man sits on the ground with legs crossed."
   equipment:
-    head: "a duffy old hat"
-    wield: "a wiry old walking stick"
+    head: "Area:duffy-old-hat"  #takes an entityReference
+    wield: "Area:twisted-walking-stick"
 - id: 3
   keywords: ["dummy", "target", "practice"]
   level: 2
