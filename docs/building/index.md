@@ -46,7 +46,7 @@ metadata:
 # Areas are scriptable just like other game entities. They can have both a
 # specific script file as well as behaviors. If you do not have a script
 # or behaviors you don't need to specify these fields
-script: "foo.js" # lives in scripts/foo.js of the area folder
+script: "foo" # lives in scripts/foo.js of the area folder
 behaviors:
   # example of having the area use the behavior called 'progressive-respawn'
   # with configuration
