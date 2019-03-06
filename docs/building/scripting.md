@@ -53,10 +53,10 @@ bundles/my-bundle/
     limbo/
     ...
   behaviors/
-    npcs/
+    npc/
       aggro.js
-    items/
-    rooms/
+    item/
+    room/
     area/
 ```
 
