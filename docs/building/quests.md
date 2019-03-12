@@ -54,8 +54,6 @@ bundles/
       FetchGoal.js
 ```
 
-Quest goals follow the familiar `srcPath` closure structure used in entity scripts, commands, etc.
-
 ```javascript
 'use strict';
 
