@@ -192,5 +192,5 @@ individual guides. The documentation is split into two parts: Building and Codin
 
 There is some overlap between the two; for example a coder will need to create the attribute definition for a builder to
 use that attribute on an NPC, or for a builder to create a quest a coder may need to create the goal and reward types
-for them to use. These may, in fact, be the same person but the guides arer separated to illustrate which bundle content
+for them to use. These may, in fact, be the same person but the guides are separated to illustrate which bundle content
 is stored in pure data and which is in Javascript files.
