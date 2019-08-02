@@ -39,6 +39,10 @@ const Combat = require('../../bundle-example-combat/lib/Combat');
 const damagePercent = 250;
 const energyCost = 20;
 
+function getDamage(player) {
+  return Combat.calculateWeaponDamage(player) * (damagePercent / 100);
+}
+
 /**
  * Basic warrior attack
  */
