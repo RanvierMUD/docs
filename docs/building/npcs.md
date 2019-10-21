@@ -22,6 +22,9 @@ In Ranvier all NPCs for an area are defined in a single file within the area fol
   keywords: ["wise", "old", "man"]
   name: "Wise Old Man"
   description: "A wise looking old man sits on the ground with legs crossed."
+  equipment:
+    head: "Area:duffy-old-hat"  #takes an entityReference
+    wield: "Area:twisted-walking-stick"
 - id: 3
   keywords: ["dummy", "target", "practice"]
   level: 2
@@ -70,6 +73,9 @@ behavior. (See [Scripting](scripting.md) for creating behaviors)
 
 `items` _`array<EntityReference>`_
 :    List of Entity References representing the NPC's default inventory
+
+`equipment` _`object<EntityReference>`_
+:    List of Entity References with the appropriate slot string as object key
 
 `quests` _`array<EntityReference>`_
 :    List of Entity References representing the quests that this character gives out (See [Quests](quests.md))
