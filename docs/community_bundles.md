@@ -9,6 +9,7 @@ Bundles which add networking functionality to your game
 
 * [telnet-networking](https://github.com/RanvierMUD/telnet-networking) - Allows your game to accept telnet connections
 * [websocket-networking](https://github.com/RanvierMUD/websocket-networking) - Allows your game to accept websocket connections
+* [ranvier-webhooks](https://github.com/azigler/ranvier-webhooks) - Handle webhooks with Ranvier state and rebuild server on `git commit`
 
 ## NPC Behaviors
 
